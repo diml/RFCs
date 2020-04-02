@@ -6,7 +6,7 @@ We (Jane Street + OCL/Tarides) would like to make the native toplevel
 faster and more self-contained.
 
 At the moment, the native toplevel works by calling the assembler and
-linker for each phrase. This makes it slow and dependant on an
+linker for each phrase. This makes it slow and dependent on an
 external toolchain which is not great for deployment.
 
 To reach this goal, we would simply like to bring [this work][paper]
@@ -24,11 +24,11 @@ self-contained binary that can evaluate OCaml code at runtime. This
 would make it simple and straightforward to use OCaml as an extension
 language.
 
-## verified  examples in documentation comment
+## Verified  examples in documentation comment
 
 We are particularly interested in this feature for the [mdx][mdx]
 tool. More precisely, we are currently working on a feature allowing
-to have verified toplevel snippets in mli files. For instance:
+verified toplevel snippets in mli files. For instance:
 
 ```ocaml
 (** [chop_prefix s ~prefix] returns [s] without the leading [prefix]. *)
@@ -48,7 +48,7 @@ In the above example, the `{[ ... ]}` would be kept up to date by
 changes. In fact, the user would initially only write the `#` lines
 and `mdx` would insert the results just as with expectation tests.
 
-# The change in details
+# The change in detail
 
 This change would add JIT code generation for x86 architectures as
 described in [the paper][paper]. For other architectures, we would
@@ -61,7 +61,7 @@ The main additions to the compiler code base would be:
 The paper mentions that it adds 2300 lines of OCaml+C code to the
 compiler code base.
 
-One detail to mention; IIUC the [JIT ocamlnat][ocamlnat] from [the
+One detail to mention: IIUC the [JIT ocamlnat][ocamlnat] from [the
 paper][paper] goes directly from the linear form to binary
 assembly. Now that we have a symbolic representation of the assembly
 we could also go from the symbolic assembly in order to share more
@@ -82,13 +82,13 @@ code if we went this way.
 
 This is one more feature to maintain in the compiler and it comes with
 a non-negligible amount of code. However, and especially if we can
-reuse LexiFi in-memory assemler, most of the additions would come from
+reuse LexiFi in-memory assembler, most of the additions would come from
 well tested code. @alainfrisch and @nobj also mentioned that this code
 was very low-maintenance and had pretty much not changed in 5 years.
 
 # Alternatives
 
-For the mdx case, we considered a few alternative.
+For the mdx case, we considered a few alternatives.
 
 ## Using a bytecode toplevel
 
@@ -116,9 +116,9 @@ the [cinaps][cinaps] tool works for instance.
 
 However, it is difficult to faithfully reproduce the behavior of the
 toplevel with this method. What is more, such a design is tedious and
-require complex collaboration between the tool and the build system.
+requires complex collaboration between the tool and the build system.
 
-Going through this amount of complexity for every build tool that want
+Going through this amount of complexity for every build tool that wants
 to compile OCaml code on the fly doesn't feel right.
 
 ## Using a mixed native/bytecode mode
